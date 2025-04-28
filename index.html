@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>Simple Fitness Tracker</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Fitness Tracker</h1>
+            <p>Track your daily activities and progress</p>
+        </header>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total Steps</h3>
+                <div class="stat-value">8,254</div>
+            </div>
+            <div class="stat-card">
+                <h3>Calories</h3>
+                <div class="stat-value">356</div>
+            </div>
+            <div class="stat-card">
+                <h3>Distance</h3>
+                <div class="stat-value">3.2 mi</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Mins</h3>
+                <div class="stat-value">45</div>
+            </div>
+        </div>
+        
+        <div class="activity-form">
+            <h2>Log New Activity</h2>
+            <form id="activity-form">
+                <div class="form-group">
+                    <label for="activity-type">Activity Type</label>
+                    <select id="activity-type">
+                        <option value="walking">Walking</option>
+                        <option value="running">Running</option>
+                        <option value="cycling">Cycling</option>
+                        <option value="swimming">Swimming</option>
+                        <option value="gym">Gym Workout</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">Duration (minutes)</label>
+                    <input type="number" id="duration" min="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intensity">Intensity</label>
+                    <select id="intensity">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                
+                <button type="submit">Add Activity</button>
+            </form>
+        </div>
+        
+        <div class="activity-log">
+            <h2>Recent Activities</h2>
+            <div class="activity-item">
+                <div>
+                    <strong>Running</strong>
+                    <div>30 minutes, High intensity</div>
+                </div>
+                <div class="activity-date">Today, 9:30 AM</div>
+            </div>
+            <div class="activity-item">
+                <div>
+                    <strong>Gym Workout</strong>
+                    <div>45 minutes, Medium intensity</div>
+                </div>
+                <div class="activity-date">Yesterday, 6:15 PM</div>
+            </div>
+            <div class="activity-item">
+                <div>
+                    <strong>Walking</strong>
+                    <div>60 minutes, Low intensity</div>
+                </div>
+                <div class="activity-date">Apr 26, 7:00 AM</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Simple Fitness Tracker - Keep moving forward!</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Basic functionality to handle form submission
+        document.getElementById('activity-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const activityType = document.getElementById('activity-type').value;
+            const duration = document.getElementById('duration').value;
+            const intensity = document.getElementById('intensity').value;
+            
+            if (!duration) {
+                alert('Please enter a duration');
+                return;
+            }
+            
+            // Create new activity item
+            const activityLog = document.querySelector('.activity-log');
+            const activityItem = document.createElement('div');
+            activityItem.className = 'activity-item';
+            
+            // Get current time
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            // Add content to the new activity item
+            activityItem.innerHTML = `
+                <div>
+                    <strong>${activityType.charAt(0).toUpperCase() + activityType.slice(1)}</strong>
+                    <div>${duration} minutes, ${intensity.charAt(0).toUpperCase() + intensity.slice(1)} intensity</div>
+                </div>
+                <div class="activity-date">Today, ${timeString}</div>
+            `;
+            
+            // Insert at the beginning of the log
+            const firstItem = activityLog.querySelector('.activity-item');
+            activityLog.insertBefore(activityItem, firstItem);
+            
+            // Reset form
+            document.getElementById('activity-form').reset();
+        });
+    </script>
+</body>
+</html>
